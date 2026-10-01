@@ -1,22 +1,95 @@
-$(window).load(function(){
+// Change this value to personalize the greeting; the balloons and final message update automatically.
+const birthdayName = 'ARNAV';
+const nameLetters = Array.from(birthdayName.normalize('NFC').toUpperCase())
+	.filter(function(character) {
+		return /^\p{L}$/u.test(character);
+	});
+
+if (nameLetters.length === 0) {
+	throw new Error('birthdayName must contain at least one letter.');
+}
+
+$(window).load(function() {
 	$('.loading').fadeOut('fast');
 	$('.container').fadeIn('fast');
 });
-$('document').ready(function(){
-		var vw;
-		$(window).resize(function(){
-			 vw = $(window).width()/2;
-			$('#b1,#b2,#b3,#b4,#b5,#b6,#b7').stop();
-			$('#b11').animate({top:240, left: vw-350},500);
-			$('#b22').animate({top:240, left: vw-250},500);
-			$('#b33').animate({top:240, left: vw-150},500);
-			$('#b44').animate({top:240, left: vw-50},500);
-			$('#b55').animate({top:240, left: vw+50},500);
-			$('#b66').animate({top:240, left: vw+150},500);
-			$('#b77').animate({top:240, left: vw+250},500);
-		});
 
-	$('#turn_on').click(function(){
+$(document).ready(function() {
+	const $balloonArea = $('.birthday-balloons');
+	let balloonsFlying = false;
+	let balloonsArranged = false;
+
+	$('.birthday-name').text(birthdayName.trim());
+	$balloonArea.attr('aria-label', 'Birthday name: ' + birthdayName.trim());
+
+	nameLetters.forEach(function(letter, index) {
+		const balloonNumber = (index % 5) + 1;
+		const $balloon = $('<div>', {
+			class: 'balloons birthday-balloon text-center',
+			role: 'img',
+			'aria-label': letter
+		}).css('background-image', "url('b" + balloonNumber + ".png')");
+
+		$('<h2>').text(letter).appendTo($balloon);
+		$balloon.appendTo($balloonArea);
+	});
+
+	const $nameBalloons = $balloonArea.find('.birthday-balloon');
+
+	function arrangeBalloons() {
+		const availableWidth = Math.max(240, window.innerWidth - 32);
+		const columns = Math.min(
+			nameLetters.length,
+			Math.max(1, Math.floor(availableWidth / 80))
+		);
+		const gap = 12;
+		const balloonWidth = Math.min(100, (availableWidth - gap * (columns - 1)) / columns);
+		const balloonHeight = balloonWidth * 1.83;
+		const rows = Math.ceil(nameLetters.length / columns);
+		const topOffset = Math.max(68, (window.innerHeight - rows * balloonHeight) / 2 - 72);
+
+		$nameBalloons.each(function(index) {
+			const row = Math.floor(index / columns);
+			const rowStart = row * columns;
+			const rowLength = Math.min(columns, nameLetters.length - rowStart);
+			const rowWidth = rowLength * balloonWidth + (rowLength - 1) * gap;
+			const left = (window.innerWidth - rowWidth) / 2 +
+				(index - rowStart) * (balloonWidth + gap);
+
+			$(this).css({
+				width: balloonWidth,
+				height: balloonHeight,
+				backgroundSize: balloonWidth + 'px ' + balloonHeight + 'px'
+			}).stop(true).animate({
+				top: topOffset + row * (balloonHeight + 16),
+				left: left
+			}, 700);
+		});
+	}
+
+	function floatBalloon(balloon) {
+		if (!balloonsFlying) {
+			return;
+		}
+
+		const $balloon = $(balloon);
+		const balloonWidth = $balloon.outerWidth();
+		const left = Math.random() * Math.max(0, window.innerWidth - balloonWidth);
+		const bottom = Math.random() * Math.max(100, window.innerHeight * 0.55);
+
+		$balloon.animate({ left: left, bottom: bottom }, 10000, function() {
+			floatBalloon(balloon);
+		});
+	}
+
+	$(window).on('resize', function() {
+		if (balloonsArranged) {
+			$nameBalloons.stop(true);
+			arrangeBalloons();
+		}
+	});
+
+	$('#turn_on').click(function() {
 		$('#bulb_yellow').addClass('bulb-glow-yellow');
 		$('#bulb_red').addClass('bulb-glow-red');
 		$('#bulb_blue').addClass('bulb-glow-blue');
@@ -24,178 +97,95 @@ $('document').ready(function(){
 		$('#bulb_pink').addClass('bulb-glow-pink');
 		$('#bulb_orange').addClass('bulb-glow-orange');
 		$('body').addClass('peach');
-		$(this).fadeOut('slow').delay(5000).promise().done(function(){
+		$(this).fadeOut('slow').delay(4700).promise().done(function() {
 			$('#play').fadeIn('slow');
 		});
 	});
-	$('#play').click(function(){
-		var audio = $('.song')[0];
-        audio.play();
-        $('#bulb_yellow').addClass('bulb-glow-yellow-after');
+
+	$('#play').click(function() {
+		const audio = $('.song')[0];
+		if (audio) {
+			audio.play();
+		}
+		$('#bulb_yellow').addClass('bulb-glow-yellow-after');
 		$('#bulb_red').addClass('bulb-glow-red-after');
 		$('#bulb_blue').addClass('bulb-glow-blue-after');
 		$('#bulb_green').addClass('bulb-glow-green-after');
 		$('#bulb_pink').addClass('bulb-glow-pink-after');
 		$('#bulb_orange').addClass('bulb-glow-orange-after');
-		$('body').css('backgroud-color','#FFF');
 		$('body').addClass('peach-after');
-		$(this).fadeOut('slow').delay(6000).promise().done(function(){
+		$(this).fadeOut('slow').delay(5700).promise().done(function() {
 			$('#bannar_coming').fadeIn('slow');
 		});
 	});
 
-	$('#bannar_coming').click(function(){
+	$('#bannar_coming').click(function() {
 		$('.bannar').addClass('bannar-come');
-		$(this).fadeOut('slow').delay(6000).promise().done(function(){
+		$(this).fadeOut('slow').delay(5700).promise().done(function() {
 			$('#balloons_flying').fadeIn('slow');
 		});
 	});
 
-	function loopOne() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b1').animate({left:randleft,bottom:randtop},10000,function(){
-			loopOne();
+	$('#balloons_flying').click(function() {
+		$('.balloon-border').animate({ top: -500 }, 8000);
+		$nameBalloons.each(function(index) {
+			$(this).addClass(index % 2 ? 'balloons-rotate-behaviour-two' : 'balloons-rotate-behaviour-one');
+			floatBalloon(this);
 		});
-	}
-	function loopTwo() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b2').animate({left:randleft,bottom:randtop},10000,function(){
-			loopTwo();
-		});
-	}
-	function loopThree() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b3').animate({left:randleft,bottom:randtop},10000,function(){
-			loopThree();
-		});
-	}
-	function loopFour() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b4').animate({left:randleft,bottom:randtop},10000,function(){
-			loopFour();
-		});
-	}
-	function loopFive() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b5').animate({left:randleft,bottom:randtop},10000,function(){
-			loopFive();
-		});
-	}
 
-	function loopSix() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b6').animate({left:randleft,bottom:randtop},10000,function(){
-			loopSix();
-		});
-	}
-	function loopSeven() {
-		var randleft = 1000*Math.random();
-		var randtop = 500*Math.random();
-		$('#b7').animate({left:randleft,bottom:randtop},10000,function(){
-			loopSeven();
-		});
-	}
-
-	$('#balloons_flying').click(function(){
-		$('.balloon-border').animate({top:-500},8000);
-		$('#b1,#b4,#b5,#b7').addClass('balloons-rotate-behaviour-one');
-		$('#b2,#b3,#b6').addClass('balloons-rotate-behaviour-two');
-		// $('#b3').addClass('balloons-rotate-behaviour-two');
-		// $('#b4').addClass('balloons-rotate-behaviour-one');
-		// $('#b5').addClass('balloons-rotate-behaviour-one');
-		// $('#b6').addClass('balloons-rotate-behaviour-two');
-		// $('#b7').addClass('balloons-rotate-behaviour-one');
-		loopOne();
-		loopTwo();
-		loopThree();
-		loopFour();
-		loopFive();
-		loopSix();
-		loopSeven();
-		
-		$(this).fadeOut('slow').delay(5000).promise().done(function(){
+		$(this).fadeOut('slow').delay(4700).promise().done(function() {
 			$('#cake_fadein').fadeIn('slow');
 		});
-	});	
+	});
 
-	$('#cake_fadein').click(function(){
+	$('#cake_fadein').click(function() {
 		$('.cake').fadeIn('slow');
-		$(this).fadeOut('slow').delay(3000).promise().done(function(){
+		$(this).fadeOut('slow').delay(2700).promise().done(function() {
 			$('#light_candle').fadeIn('slow');
 		});
 	});
 
-	$('#light_candle').click(function(){
+	$('#light_candle').click(function() {
 		$('.fuego').fadeIn('slow');
-		$(this).fadeOut('slow').promise().done(function(){
+		$(this).fadeOut('slow').promise().done(function() {
 			$('#wish_message').fadeIn('slow');
 		});
 	});
 
-		
-	$('#wish_message').click(function(){
-		 vw = $(window).width()/2;
-
-		$('#b1,#b2,#b3,#b4,#b5,#b6,#b7').stop();
-		$('#b1').attr('id','b11');
-		$('#b2').attr('id','b22')
-		$('#b3').attr('id','b33')
-		$('#b4').attr('id','b44')
-		$('#b5').attr('id','b55')
-		$('#b6').attr('id','b66')
-		$('#b7').attr('id','b77')
-		$('#b11').animate({top:240, left: vw-350},500);
-		$('#b22').animate({top:240, left: vw-250},500);
-		$('#b33').animate({top:240, left: vw-150},500);
-		$('#b44').animate({top:240, left: vw-50},500);
-		$('#b55').animate({top:240, left: vw+50},500);
-		$('#b66').animate({top:240, left: vw+150},500);
-		$('#b77').animate({top:240, left: vw+250},500);
-		$('.balloons').css('opacity','0.9');
-		$('.balloons h2').fadeIn(3000);
-		$(this).fadeOut('slow').delay(3000).promise().done(function(){
+	$('#wish_message').click(function() {
+		balloonsFlying = false;
+		balloonsArranged = true;
+		$nameBalloons.stop(true).css('opacity', 0.95);
+		arrangeBalloons();
+		$nameBalloons.find('h2').fadeIn(1800);
+		$(this).fadeOut('slow').delay(3000).promise().done(function() {
 			$('#story').fadeIn('slow');
 		});
 	});
-	
-	$('#story').click(function(){
+
+	$('#story').click(function() {
 		$(this).fadeOut('slow');
-		$('.cake').fadeOut('fast').promise().done(function(){
+		$('.cake').fadeOut('fast').promise().done(function() {
 			$('.message').fadeIn('slow');
 		});
-		
-		var i;
 
-		function msgLoop (i) {
-			$("p:nth-child("+i+")").fadeOut('slow').delay(600).promise().done(function(){
-			i=i+1;
-			$("p:nth-child("+i+")").fadeIn('slow').delay(800);
-			if(i==50){
-				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
-					$('.cake').fadeIn('fast');
-				});
-				
+		const $messageLines = $('.message p');
+		let lineIndex = 0;
+		const messageFadeDuration = 500;
+
+		function showNextMessage() {
+			if (lineIndex > 0) {
+				$messageLines.eq(lineIndex - 1).fadeOut(messageFadeDuration);
 			}
-			else{
-				msgLoop(i);
-			}			
-
-		});
-			// body...
+			if (lineIndex < $messageLines.length) {
+				$messageLines.eq(lineIndex).fadeIn(messageFadeDuration);
+				lineIndex += 1;
+				setTimeout(showNextMessage, 1600);
+			} else {
+				$('.cake').fadeIn('fast');
+			}
 		}
-		
-		msgLoop(0);
-		
+
+		showNextMessage();
 	});
 });
-
-
-
-
-//alert('hello');

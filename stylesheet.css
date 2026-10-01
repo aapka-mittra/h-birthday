@@ -1,6 +1,5 @@
 body {
-	/*background-color: #FFDAB9;	*/
-	background-color: #000;
+	background-color: #111827;
 	-webkit-transition:background-color linear 5s;
 	-moz-transition:background-color linear 5s;
 	-o-transition:background-color linear 5s;
@@ -12,8 +11,7 @@ body {
 	display: none;
 }
 .peach {
-	background-color: #FFDAB9;
-	
+	background: linear-gradient(180deg, #ffd9d0 0%, #ffe9b5 42%, #f8d9ff 100%);
 }
 .peach-after {
 	-webkit-animation:peach_alive linear 8s infinite;
@@ -25,90 +23,90 @@ body {
 
 @-webkit-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #ffe9b5;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #f8d9ff;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 }
 @-moz-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #ffe9b5;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #f8d9ff;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 }
 
 @-o-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #ffe9b5;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #f8d9ff;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 }
 
 @-ms-keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #ffe9b5;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #f8d9ff;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 }
 
 @keyframes peach_alive {
 	0%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	25%{
-		background-color: #FFE4B5;
+		background-color: #ffe9b5;
 	}
 	50%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 	75%{
-		background-color: #FFEFD5;
+		background-color: #f8d9ff;
 	}
 	100%{
-		background-color: #FFDAB9;
+		background-color: #ffd9d0;
 	}
 }
 
@@ -1108,12 +1106,6 @@ audio {
 #b5,#b55{
 	background-image: url('b5.png');
 }
-#b6,#b66{
-	background-image: url('b6.png');
-}
-#b7,#b77{
-	background-image: url('b7.png');
-}
 .balloons-rotate-behaviour-one {
 	-webkit-animation: balloons_rotate_one linear 10s infinite;
 	-webkit-transform: rotate(30deg);
@@ -1275,20 +1267,20 @@ audio {
 	font-family: 'Signika', sans-serif;
 	font-size: 30px;
 	text-transform: uppercase;
-	color: #C4515C;
-	text-shadow: 2px 2px 2px #FFF;
+	color: #b64d73;
+	text-shadow: 2px 2px 2px rgba(255,255,255,0.9);
 	display: none;
 	font-weight: bold;
 }
 
 .btn-primary {
-        border-color: #466baf;
+        border-color: #7a53c6;
         padding: 10px;
         text-transform: uppercase;
         font-family: 'Signika', sans-serif;
         font-weight: 700;
         color: #fff;
-        background-color: #466baf;
+        background: linear-gradient(135deg, #7a53c6 0%, #e768a6 100%);
 }
     .btn-primary:hover,
     .btn-primary:focus,
@@ -1297,7 +1289,7 @@ audio {
     .open .dropdown-toggle.btn-primary {
         border-color: #fff;
         color: #fff;
-        background-color: #466baf;
+        background: linear-gradient(135deg, #8d69d8 0%, #f27bb6 100%);
     }
 
 
@@ -1308,3 +1300,116 @@ audio {
     		-webkit-transform: scale(0.9);
     	}
     }*/
+
+:root {
+	--royal-navy: #17243a;
+	--royal-deep: #0b1220;
+	--champagne: #d7b879;
+	--ivory: #f4ecd9;
+	--ink: #253148;
+}
+
+body {
+	background-image: radial-gradient(ellipse at 50% 0%, #26344b 0%, var(--royal-deep) 72%);
+	background-color: var(--royal-deep);
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: cover;
+	min-height: 100vh;
+	color: var(--ivory);
+	transition: background-color 3s ease;
+}
+
+.peach {
+	background-color: #6b5639;
+	background-image: radial-gradient(ellipse at 50% 0%, rgba(255, 221, 157, 0.3) 0%, rgba(23, 36, 58, 0.08) 72%);
+}
+
+.peach-after {
+	background-color: #806746;
+	background-image: radial-gradient(ellipse at 50% 0%, rgba(255, 225, 173, 0.32) 0%, rgba(23, 36, 58, 0.08) 72%);
+	animation: elegant-background 8s ease-in-out infinite;
+}
+
+@keyframes elegant-background {
+	0%, 100% { background-color: #806746; }
+	33% { background-color: #5c5268; }
+	66% { background-color: #49616a; }
+}
+
+.birthday-balloons {
+	position: fixed;
+	inset: 0;
+	z-index: 99;
+	pointer-events: none;
+}
+
+.birthday-balloons .birthday-balloon {
+	position: absolute;
+	top: 100%;
+	bottom: auto;
+	left: 0;
+	width: 100px;
+	height: 183px;
+	opacity: 0.72;
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: contain;
+}
+
+.birthday-balloon h2 {
+	color: var(--royal-navy);
+	font-size: clamp(24px, 4vw, 42px);
+	font-weight: 700;
+	text-shadow: 1px 2px 0 rgba(255, 255, 255, 0.9);
+}
+
+.message p {
+	color: var(--royal-navy);
+	text-shadow: 0 2px 0 rgba(255, 255, 255, 0.8);
+	font-size: clamp(12px, 2vw, 30px);
+	line-height: 1.35;
+	white-space: nowrap;
+	text-align: center;
+}
+
+.btn-primary,
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-primary:active,
+.btn-primary.active,
+.open .dropdown-toggle.btn-primary {
+	border: 1px solid var(--champagne);
+	border-radius: 7px;
+	color: var(--ivory);
+	background: linear-gradient(135deg, #243550 0%, #101a2b 100%);
+	box-shadow: 0 3px 12px rgba(11, 18, 32, 0.2);
+	transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+	border-color: #f0d89f;
+	background: linear-gradient(135deg, #344967 0%, #17243a 100%);
+	transform: translateY(-1px);
+}
+
+.balloon-border {
+	opacity: 0.35;
+}
+
+@media (max-width: 600px) {
+	.birthday-balloon h2 {
+		font-size: clamp(20px, 7vw, 34px);
+	}
+
+	.navbar-fixed-bottom {
+		padding: 0 8px;
+	}
+
+	.navbar-fixed-bottom .btn {
+		margin: 2px;
+		padding: 7px;
+		font-size: 10px;
+	}
+}

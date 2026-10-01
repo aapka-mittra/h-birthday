@@ -1,32 +1,25 @@
 Happy Birthday
 
-A Happy Birthday animation design in CSS3, HTML5.
+A personalized birthday animation page built with HTML5, CSS3, and jQuery.
 
-Technology Used: HTML5 CSS3 jQuery  GNU/Linux Digital Ocean as VPS GIMP
+Technology Used: HTML5, CSS3, and jQuery
 
 # Setup
 
-## If you have python installed:
-```
-cd Birthday
-```
+From the project root, start a local static server:
 
-&& 
-
+## Python
 ```
-python -m SimpleHTTPServer --port  8081
+python -m http.server 8081
 ```
 
-visit http://localhost:8081 in your browser.
+Then visit http://localhost:8081 in your browser.
 
-## If you have nodejs installed
+## Node.js (optional)
 ```
 npm install
-```
-&&
-
-```
 npm run server-node
 ```
-visit http://localhost:8081 in your browser.
+
+Then visit http://localhost:8081 in your browser.
 
